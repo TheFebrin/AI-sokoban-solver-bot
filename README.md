@@ -16,7 +16,7 @@ Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com
 </p>
 
 First you need to download the map. </br>
-You can use this script, (it's also included in files). </br>
+You can use this script, (it's also included in project files `get_canvas.js`). </br>
 Type it in page inspect console. </br>
 
 ```
