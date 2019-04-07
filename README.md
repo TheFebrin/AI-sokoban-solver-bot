@@ -17,9 +17,10 @@ Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com
 
 First you need to download the map. </br>
 You can use this script, (it's also included in project files `get_canvas.js`). </br>
-Type it in page inspect console. </br>
+I use https://tampermonkey.net/ to make it faster.
+Type it in Web inspector console. </br>
 
-```
+```js
 const result = document.querySelectorAll("canvas")
 const dataUrl = result[0].toDataURL('image/png').replace("image/png", "image/octet-stream");
 window.location.href = dataUrl;
