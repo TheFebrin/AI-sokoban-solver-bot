@@ -12,11 +12,11 @@ def fn(x):
     return 255 if x > thresh else 0
 
 
-img = Image.open('canvas', 'r')
+img = Image.open('download', 'r')
 img = img.convert('L').point(fn, mode='1')
 img.save('map.png')
 data = np.asarray(img)
-
+os.remove('download')
 
 # img.show()
 # plt.imshow(data, interpolation='nearest')
@@ -35,7 +35,7 @@ done = False
 for i in range(width):
     if done:
         break
-    for j in range(30):
+    for j in range(40):
         if data[height // 2 + j][i] == True:
             cut_left = i
             done = True
@@ -46,7 +46,7 @@ done = False
 for i in range(height):
     if done:
         break
-    for j in range(30):
+    for j in range(40):
         if data[i][width // 2 + j] == True:
             cut_top = i
             done = True
@@ -81,8 +81,8 @@ def map_square(x, y):
         64 x 64 block mapped to a char
     '''
     black_no, white_no = 0, 0
-    for i in range(64):
-        for j in range(64):
+    for i in range(block_size):
+        for j in range(block_size):
             if ans[x + i][y + j] == '#':
                 white_no += 1
             else:
@@ -115,10 +115,10 @@ def map_square(x, y):
 
 # iterate through all 64 x 64 blocks
 N, M = len(ans), len(ans[0])
-for i in range(0, N, 64):
+for i in range(0, N, block_size):
     row = []
-    for j in range(0, M, 64):
-        if i + 64 < N and j + 64 < M:
+    for j in range(0, M, block_size):
+        if i + block_size < N and j + block_size < M:
             pixels = map_square(i, j)
             row.append(pixels)
 
