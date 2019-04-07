@@ -1,6 +1,6 @@
 # Sokoban-AI-solver
 Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com/) </br>
-[An example puzzle. ](https://www.sokobanonline.com/play/web-archive/marti-homs-caussa/choriban/86887_choriban-20).
+[An example puzzle. ](https://www.sokobanonline.com/play/web-archive/marti-homs-caussa/choriban/86887_choriban-20)
 
 
 ### How does it work?
