@@ -1,5 +1,5 @@
 # Sokoban-AI-solver
-Bot that was made to solve Sokoban puzzles [on this site.](https://www.sokobanonline.com/)
+Bot that was made to solve Sokoban puzzles [on this site.](https://www.sokobanonline.com/) </br>
 [This is ](https://www.sokobanonline.com/play/web-archive/marti-homs-caussa/choriban/86887_choriban-20) an example puzzle.
 
 
@@ -11,13 +11,13 @@ Bot that was made to solve Sokoban puzzles [on this site.](https://www.sokobanon
 
 ### How to use it.
 
-<!-- <p align="center">
+<p align="center">
   <img src="readme_map.png" alt="Screenshot"/>
-</p> -->
+</p>
 
-First you need to download the map.
-You can use this script, (it's also included in files).
-Type it in page inspect console.
+First you need to download the map. </br>
+You can use this script, (it's also included in files). </br>
+Type it in page inspect console. </br>
 
 ```
 const result = document.querySelectorAll("canvas")
@@ -25,10 +25,10 @@ const dataUrl = result[0].toDataURL('image/png').replace("image/png", "image/oct
 window.location.href = dataUrl;
 ```
 
-After that you need to install all required libraries in `Solve.py`
-Run `sudo python Solve.py` to start the program.
+After that you need to install all required libraries in `Solve.py` </br>
+Run `sudo python Solve.py` to start the program. </br>
 
-TODO:
-Better blocks mapping, because now it works only when blocks are 64 x 64.
-Faster BFS or A*
+TODO: </br>
+Better blocks mapping, because now it works only when blocks are 64 x 64. </br>
+Faster BFS or A* </br>
 
