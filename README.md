@@ -17,7 +17,7 @@ Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com
 
 First you need to download the map. </br>
 You can use this script, (it's also included in project files `get_canvas.js`). </br>
-I use https://tampermonkey.net/ to make it faster.
+I use https://tampermonkey.net/ to make it faster. </br>
 Type it in Web inspector console. </br>
 
 ```js
@@ -32,4 +32,5 @@ Run `sudo python Solve.py` to start the program. </br>
 TODO: </br>
 Better blocks mapping, because now it works only when blocks are 64 x 64. </br>
 Faster BFS or A* </br>
+Maybe do all with only one script. </br>
 
