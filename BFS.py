@@ -65,13 +65,26 @@ def is_there_a_chest(x, y, chests):
     return False
 
 
+def blocked_chest(x, y):
+    cnt = 0
+    for i in range(4):
+        if MAP[x + dx[i]][y + dy[i]] == '#':
+            cnt += 1
+
+    return cnt >= 3
+
+
 def good_move(x, y, state, direction):
     if not(0 <= x < N) or not(0 <= y < M) or MAP[x][y] == '#':
         return False
 
     hs = hash_state(x, y, state)
-
     chests = state[1]
+
+    for chest in chests:
+        if MAP[chest[0]][chest[1]] == '#' or blocked_chest(chest[0], chest[1]):
+            return False
+
     if is_there_a_chest(x, y, chests):
         if direction == 'down' and x + 1 < N and (is_there_a_chest(x + 1, y, chests) or MAP[x + 1][y] == '#'):
             return False
