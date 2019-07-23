@@ -1,80 +1,42 @@
-from PIL import Image
-from matplotlib import pyplot as plt
-import numpy as np
-import os
+from functions import *
+# import functions
 
-
-def fn(x):
-    '''
-    we want either black or white pixels
-    '''
-    thresh = 200
-    return 255 if x > thresh else 0
-
-
-img = Image.open('download', 'r')
-img = img.convert('L').point(fn, mode='1')
-img.save('map.png')
-data = np.asarray(img)
-os.remove('download')
-
-# img.show()
-# plt.imshow(data, interpolation='nearest')
-# plt.show()
-
-
-# True = white pixels
-# False = black pixels
-
-height, width = len(data), len(data[0])
-print('Map size: ', width, ' x ', height, '\n')
-
-# we need to cut top and left part of the picture
-cut_left = 0
-done = False
-for i in range(width):
-    if done:
-        break
-    for j in range(40):
-        if data[height // 2 + j][i] == True:
-            cut_left = i
-            done = True
+def cut(data):
+    # we need to cut top and left part of the picture
+    cut_left = 0
+    done = False
+    for i in range(width):
+        if done:
             break
+        for j in range(40):
+            if data[height // 2 + j][i] == True:
+                cut_left = i
+                done = True
+                break
 
-cut_top = 0
-done = False
-for i in range(height):
-    if done:
-        break
-    for j in range(40):
-        if data[i][width // 2 + j] == True:
-            cut_top = i
-            done = True
+    cut_top = 0
+    done = False
+    for i in range(height):
+        if done:
             break
+        for j in range(40):
+            if data[i][width // 2 + j] == True:
+                cut_top = i
+                done = True
+                break
 
-# inserting pixels into ans list
-ans = []
-for i in range(cut_top, height):
-    row = []
+    # inserting pixels into ans list
+    global ans
+    for i in range(cut_top, height):
+        row = []
+        for j in range(cut_left, width):
+            pixel = data[i][j]
+            row.append('#' if pixel else ' ')
 
-    for j in range(cut_left, width):
-        pixel = data[i][j]
-        row.append('#' if pixel else ' ')
-
-    ans.append(row)
-
-# save sokoban map to file to check if its good
-with open('out.txt', 'w+') as o:
-    for x in ans:
-        o.write(''.join(str(w) for w in x))
-        o.write('\n')
+        ans.append(row)
 
 
-block_size = 64
-SOKOBAN_MAP = []
-
-
-def map_square(x, y):
+def map_squares(x, y):
     '''
     count numbers of white and black pixels in 64 x 64 block square
     @returns:
@@ -113,29 +75,40 @@ def map_square(x, y):
         return 'P'  # Player
 
 
-# iterate through all 64 x 64 blocks
-N, M = len(ans), len(ans[0])
-for i in range(0, N, block_size):
-    row = []
-    for j in range(0, M, block_size):
-        if i + block_size < N and j + block_size < M:
-            pixels = map_square(i, j)
-            row.append(pixels)
+def create_map(ans):
+    '''
+    iterate through all blocks,
 
-    SOKOBAN_MAP.append(row)
+    '''
+    N, M = len(ans), len(ans[0])
+    for i in range(0, N, block_size):
+        row = []
+        for j in range(0, M, block_size):
+            if i + block_size < N and j + block_size < M:
+                pixels = map_squares(i, j)
+                row.append(pixels)
+
+        SOKOBAN_MAP.append(row)
 
 
-for row in SOKOBAN_MAP:
-    print(*row)
+if __name__ == '__main__':
+    import_image()
+    height, width = get_map_size()
+    print('Map size: ', width, ' x ', height, '\n')
+    cut(get_data())
+    save_map()
+    create_map(get_ans())
 
-# let's save out map to txt
-with open('map.txt', 'w') as f:
     for row in SOKOBAN_MAP:
-        f.write(''.join(row) + '\n')
+        print(*row)
 
+    # let's save out map to txt
+    with open('map.txt', 'w') as f:
+        for row in SOKOBAN_MAP:
+            f.write(''.join(row) + '\n')
 
-# Lets run our BFS
-import BFS
+    # Lets run our BFS
+    import BFS
 
-# Now we need to make our keyboard print the answer
-import write
+    # Now we need to make our keyboard print the answer
+    import write
