@@ -31,6 +31,6 @@ Run `sudo python Solve.py` to start the program. </br>
 
 TODO: </br>
 Better blocks mapping, because now it works only when blocks are 64 x 64. </br>
-Faster BFS or A* </br>
+Another BFS based algorithm or A* running as parallel thread </br>
 Maybe do all with only one script. </br>
-
+List all needed libraries </br>

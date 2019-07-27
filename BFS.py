@@ -5,41 +5,53 @@ MAP = []
 ALL_STATES = set()
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
-
-with open('map.txt') as f:
-    for line in f:
-        MAP.append(list(line.strip()))
-
-N, M = len(MAP) - 1, len(MAP[0])
-
-print('\n Beginning state \n')
-for m in MAP:
-    print(*m)
-
-# extract all positions
-# P - player's position
-# C - chest's position
-# G - goal's position
-# * - chest laying on goal
-
+N, M = 0, 0
 sokoban_pos = (0, 0)
 chests, goals, good_chests = [], [], {}
-for i in range(N):
-    for j in range(M):
-        if MAP[i][j] == 'P':
-            sokoban_pos = (i, j)
-        if MAP[i][j] == 'C':
-            chests.append((i, j))
-        if MAP[i][j] == 'G':
-            good_chests[(i, j)] = False
-            goals.append((i, j))
-        if MAP[i][j] == '*':
-            good_chests[(i, j)] = True
-            chests.append((i, j))
-            goals.append((i, j))
 
-        if MAP[i][j] != '#':
-            MAP[i][j] = '.'
+def print_info():
+
+    print('C - chest')
+    print('G - goal')
+    print('P - player')
+    print('# - wall \n')
+
+    print('\n <Beginning state> \n')
+    for m in MAP:
+        print(*m)
+
+    print('\n <Looking for solution> \n')
+
+def read_map():
+    with open('map.txt') as f:
+        for line in f:
+            if len(line) > 1:
+                MAP.append(list(line.strip()))
+
+def init_data():
+    # extract all positions
+    # P - player's position
+    # C - chest's position
+    # G - goal's position
+    # * - chest laying on goal
+
+    global sokoban_pos, chests, goals, good_chests
+    for i in range(N):
+        for j in range(M):
+            if MAP[i][j] == 'P':
+                sokoban_pos = (i, j)
+            if MAP[i][j] == 'C':
+                chests.append((i, j))
+            if MAP[i][j] == 'G':
+                good_chests[(i, j)] = False
+                goals.append((i, j))
+            if MAP[i][j] == '*':
+                good_chests[(i, j)] = True
+                chests.append((i, j))
+                goals.append((i, j))
+
+            if MAP[i][j] != '#':
+                MAP[i][j] = '.'
 
 
 def direction(x):
@@ -145,49 +157,57 @@ def print_map(state):
 
 
 def print_answer(state):
-    print('Number of steps: ', len(state[3]))
+    print('Number of steps needed: ', len(state[3]))
     print()
     steps = [direction(i) for i in state[3]]
-    print(steps)
+    steps = ', '.join(steps)
+    print(steps.title(), end='\n\n')
 
     with open('steps.txt', 'w') as f:
         for step in steps:
             f.write(step + ' ')
 
 
-# BFS
-Q = deque()
-state = (sokoban_pos, chests, good_chests, [])
-Q.append(state)
-ALL_STATES.add(hash_state(sokoban_pos[0], sokoban_pos[1], state))
+def run_bfs():
+    global N, M, sokoban_pos, chests, good_chests
 
-cnt = 0
-while len(Q) > 0:
-    act_state = Q.popleft()
-    cnt += 1
-    if cnt % 100000 == 0:
-        print('Steps: ', cnt)
-    # print(act_state)
-    # print_map(act_state)
+    read_map()
+    print_info()
+    N, M = len(MAP), len(MAP[0])
+    init_data()
 
-    if win(act_state[2]):
-        print('SOLUTION FOUND!!\n')
-        print_map(act_state)
-        print_answer(act_state)
-        break
+    Q = deque()
+    state = (sokoban_pos, chests, good_chests, [])
+    Q.append(state)
+    ALL_STATES.add(hash_state(sokoban_pos[0], sokoban_pos[1], state))
 
-    s_pos = act_state[0]
-    for i in range(4):
-        new_x = s_pos[0] + dx[i]
-        new_y = s_pos[1] + dy[i]
-        chests, good_chests = act_state[1].copy(), act_state[2].copy()
-        moves = act_state[3].copy()
-        # print(s_pos, ' ---> ', (new_x, new_y), direction(i))
+    cnt = 0
+    while len(Q) > 0:
+        act_state = Q.popleft()
+        cnt += 1
+        if cnt % 10000 == 0:
+            print('States visited: ', cnt)
+        # print(act_state)
+        # print_map(act_state)
 
-        if good_move(new_x, new_y, act_state, direction(i)):
-            if is_there_a_chest(new_x, new_y, act_state[1]):
-                move_chest(new_x, new_y, i, chests, good_chests)
+        if win(act_state[2]):
+            print('\n <SOLUTION FOUND!> \n')
+            print_map(act_state)
+            print_answer(act_state)
+            break
 
-            moves.append(i)
-            new_state = ((new_x, new_y), chests, good_chests, moves)
-            Q.append(new_state)
+        s_pos = act_state[0]
+        for i in range(4):
+            new_x = s_pos[0] + dx[i]
+            new_y = s_pos[1] + dy[i]
+            chests, good_chests = act_state[1].copy(), act_state[2].copy()
+            moves = act_state[3].copy()
+            # print(s_pos, ' ---> ', (new_x, new_y), direction(i))
+
+            if good_move(new_x, new_y, act_state, direction(i)):
+                if is_there_a_chest(new_x, new_y, act_state[1]):
+                    move_chest(new_x, new_y, i, chests, good_chests)
+
+                moves.append(i)
+                new_state = ((new_x, new_y), chests, good_chests, moves)
+                Q.append(new_state)
