@@ -78,7 +78,8 @@ def cut():
 
 def create_map():
     '''
-    iterate through all blocks,
+    Iterate through all blocks,
+    create compact map
     '''
     N, M = len(reduced_map), len(reduced_map[0])
     for i in range(0, N, block_size):
@@ -93,8 +94,8 @@ def create_map():
 
 def map_squares(x, y):
     '''
-    count numbers of white and black pixels in one block square
-    creates map readable for computer
+    Count numbers of white and black pixels in one block square,
+    create map readable for computer
     '''
 
     black_no, white_no = 0, 0
@@ -111,23 +112,28 @@ def map_squares(x, y):
     if 1700 <= ratio <= 1800:
         return '#'  # wall block
 
-    if ratio >= 4001:
+    elif ratio >= 4001:
         return '#'  # empty field outside of the map
 
-    if ratio <= -4000:
+    elif ratio <= -4000:
         return '.'  # empty block
 
-    if -4001 <= ratio <= -3800:
+    elif -4001 <= ratio <= -3800:
         return 'G'  # goal
 
-    if 3800 <= ratio <= 3850:
+    elif 3800 <= ratio <= 3850:
         return 'C'  # chest
 
-    if 3858 <= ratio <= 4000:
+    elif 3858 <= ratio <= 4000:
         return '*'  # chest on goal
 
-    if -1500 <= ratio <= -900:
+    elif -1500 <= ratio <= -900:
         return 'P'  # Player
+
+    else:
+        print('Unknown block ', ratio)
+        return '@'
+
 
 
 def save_map():
