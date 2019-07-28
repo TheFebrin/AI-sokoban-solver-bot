@@ -160,9 +160,9 @@ def print_answer(state):
     print('Number of steps needed: ', len(state[3]))
     print()
     steps = [direction(i) for i in state[3]]
-    steps = ', '.join(steps)
-    print(steps.title(), end='\n\n')
-
+    # steps = ', '.join(steps)
+    # print(steps.title(), end='\n\n')
+    print(steps)
     with open('steps.txt', 'w') as f:
         for step in steps:
             f.write(step + ' ')

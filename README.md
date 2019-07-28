@@ -3,13 +3,13 @@ Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com
 [An example puzzle. ](https://www.sokobanonline.com/play/web-archive/marti-homs-caussa/choriban/86887_choriban-20)
 
 
-### How does it work?
+## How does it work?
 1. Download the map canvas and convert it to B&W.
 2. Map blocks by counting pixels to get simple .txt version of the map.
 3. Now BFS based algorithm can use this .txt map to find a way to solve the puzzle!
 
 
-### How to use it.
+## How to use it.
 
 <p align="center">
   <img src="readme_map.png" alt="Screenshot"/>
