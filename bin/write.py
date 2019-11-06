@@ -2,7 +2,7 @@ import keyboard
 import time
 
 steps = []
-with open('search_algorithms/steps.txt') as f:
+with open('text/steps.txt') as f:
     s = f.readlines()
     for step in s[0].split():
         steps.append(step)

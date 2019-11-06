@@ -166,7 +166,7 @@ def print_answer(state):
     # steps = ', '.join(steps)
     # print(steps.title(), end='\n\n')
     print(steps)
-    with open('steps.txt', 'w') as f:
+    with open('text/steps.txt', 'w') as f:
         for step in steps:
             f.write(step + ' ')
 
