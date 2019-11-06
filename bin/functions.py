@@ -26,7 +26,7 @@ def import_map_image():
     global raw_map, width, height
     img = Image.open('download', 'r')
     img = img.convert('L').point(fn, mode='1')
-    img.save('map.png')
+    img.save('images/map.png')
     raw_map = np.asarray(img)
     # os.remove('download')
 
@@ -140,7 +140,7 @@ def save_map():
     '''
     Save sokoban map to file
     '''
-    with open('map.txt', 'w') as f:
+    with open('text/map.txt', 'w') as f:
         for row in SOKOBAN_MAP:
             f.write(''.join(row) + '\n')
 

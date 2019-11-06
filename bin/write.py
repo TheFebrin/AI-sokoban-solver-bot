@@ -2,7 +2,7 @@ import keyboard
 import time
 
 steps = []
-with open('steps.txt') as f:
+with open('search_algorithms/steps.txt') as f:
     s = f.readlines()
     for step in s[0].split():
         steps.append(step)
@@ -29,7 +29,7 @@ for move in steps:
     keyboard.wait('enter')
 
 '''
-# Auto moves MODe
+# Auto moves mode
 
 for move in steps:
     print(move)

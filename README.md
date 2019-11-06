@@ -4,8 +4,8 @@ Bot that was made to solve Sokoban puzzles [here.](https://www.sokobanonline.com
 
 
 ## How does it work?
-1. Download the map canvas and convert it to B&W.
-2. Map blocks by counting pixels to get simple .txt version of the map.
+1. Downloads the map canvas and changes it to B&W.
+2. Converts .png picture-map to smaller .txt char-map.
 3. Now BFS based algorithm can use this .txt map to find a way to solve the puzzle!
 
 

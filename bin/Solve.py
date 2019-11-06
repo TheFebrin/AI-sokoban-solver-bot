@@ -1,3 +1,5 @@
+import sys
+sys.path.append('search_algorithms/')
 from functions import *
 import BFS
 # import functions

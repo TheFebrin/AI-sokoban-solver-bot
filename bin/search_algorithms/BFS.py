@@ -1,5 +1,7 @@
-from os import system
 from collections import deque
+import sys, os
+this_dir = sys.path[0]
+
 
 MAP = []
 ALL_STATES = set()
@@ -23,7 +25,8 @@ def print_info():
     print('\n <Looking for solution> \n')
 
 def read_map():
-    with open('map.txt') as f:
+    img_path = os.path.join(this_dir, '../bin/text/map.txt')
+    with open(img_path) as f:
         for line in f:
             if len(line) > 1:
                 MAP.append(list(line.strip()))
